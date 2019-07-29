@@ -135,7 +135,7 @@ open class CollectionViewBinderDataSource<Changeset: SectionedDataSourceChangese
             if let changeset = newValue, _changeset != nil {
                 applyChangeset(changeset)
             } else {
-                _changeset = newValue
+                _changeset = changeset
                 collectionView?.reloadData()
                 ensureCollectionViewSyncsWithTheDataSource()
             }
