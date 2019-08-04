@@ -141,11 +141,11 @@ extension ChangesetContainerProtocol where Changeset.Collection: TreeProtocol {
     }
 }
 
-extension SignalProtocol where Error == Never {
-
-    /// Bind the collection signal to the given changeset container like MutableObervableArray.
-    @discardableResult
-    public func bind<C: ChangesetContainerProtocol>(to changesetContainer: C) -> Disposable where C: BindableProtocol, C.Element == C.Changeset, C.Changeset.Collection == Element {
-        return map { C.Changeset(collection: $0, diff: .init()) }.bind(to: changesetContainer)
-    }
-}
+//extension SignalProtocol where Error == Never {
+//
+//    /// Bind the collection signal to the given changeset container like MutableObervableArray.
+//    @discardableResult
+//    public func bind<C: ChangesetContainerProtocol>(to changesetContainer: C) -> Disposable where C: BindableProtocol, C.Element == C.Changeset, C.Changeset.Collection == Element {
+//        return map { C.Changeset(collection: $0, diff: .init()) }.bind(to: changesetContainer)
+//    }
+//}

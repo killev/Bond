@@ -193,6 +193,8 @@
 		90C04DC21E8F0B97000077C8 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C04D531E8F0B1D000077C8 /* UITextField.swift */; };
 		90C04DC31E8F0B97000077C8 /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C04D541E8F0B1D000077C8 /* UITextView.swift */; };
 		90C04DC41E8F0B97000077C8 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C04D551E8F0B1D000077C8 /* UIView.swift */; };
+		9212D16822F19D07004636B6 /* POChangeset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9212D16722F19D07004636B6 /* POChangeset.swift */; };
+		9212D16B22F1A6F8004636B6 /* POUITableView+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9212D16A22F1A6F8004636B6 /* POUITableView+DataSource.swift */; };
 		E58FBB8D22187FD700339211 /* UIPickerView+DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58FBB8C22187FD700339211 /* UIPickerView+DataSource.swift */; };
 		E5BAF71221C68394008C78E2 /* UIPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5BAF71121C68394008C78E2 /* UIPickerView.swift */; };
 		E5C968A9221926D70026D7D8 /* UIPickerViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5C968A8221926D70026D7D8 /* UIPickerViewTests.swift */; };
@@ -462,6 +464,8 @@
 		90C04DCF1E8F0BA7000077C8 /* UICollectionViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewTests.swift; sourceTree = "<group>"; };
 		90C04DD01E8F0BA7000077C8 /* UIKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitTests.swift; sourceTree = "<group>"; };
 		90C04DD11E8F0BA7000077C8 /* UITableViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewTests.swift; sourceTree = "<group>"; };
+		9212D16722F19D07004636B6 /* POChangeset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POChangeset.swift; sourceTree = "<group>"; };
+		9212D16A22F1A6F8004636B6 /* POUITableView+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "POUITableView+DataSource.swift"; sourceTree = "<group>"; };
 		E58FBB8C22187FD700339211 /* UIPickerView+DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPickerView+DataSource.swift"; sourceTree = "<group>"; };
 		E5BAF71121C68394008C78E2 /* UIPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIPickerView.swift; sourceTree = "<group>"; };
 		E5C968A8221926D70026D7D8 /* UIPickerViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIPickerViewTests.swift; sourceTree = "<group>"; };
@@ -808,6 +812,23 @@
 			path = BondTests;
 			sourceTree = "<group>";
 		};
+		9212D16622F19CDF004636B6 /* PO */ = {
+			isa = PBXGroup;
+			children = (
+				9212D16922F1A3F2004636B6 /* UIKit */,
+				9212D16722F19D07004636B6 /* POChangeset.swift */,
+			);
+			path = PO;
+			sourceTree = "<group>";
+		};
+		9212D16922F1A3F2004636B6 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				9212D16A22F1A6F8004636B6 /* POUITableView+DataSource.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
 		EC0D8D1D21C697BE003F8EF2 /* Deprecations */ = {
 			isa = PBXGroup;
 			children = (
@@ -834,6 +855,7 @@
 		ECF15FD9207A036D00DEB77D /* Observable Collections */ = {
 			isa = PBXGroup;
 			children = (
+				9212D16622F19CDF004636B6 /* PO */,
 				EC5EB13B215D1CAF00338531 /* Changeset.swift */,
 				ECDC8CA7215EB0C30079E521 /* ChangesetContainer.swift */,
 				ECBCE0C1216168250078E03B /* OrderedCollectionDiff.swift */,
@@ -1107,6 +1129,7 @@
 				90C04D791E8F0B89000077C8 /* NSObject.swift in Sources */,
 				90C04D761E8F0B89000077C8 /* CALayer.swift in Sources */,
 				ECBCE0CB21616B4C0078E03B /* OrderedCollectionDiff+Strideable.swift in Sources */,
+				9212D16B22F1A6F8004636B6 /* POUITableView+DataSource.swift in Sources */,
 				ECBCE0D7216170460078E03B /* OrderedCollectionDiff+IndexPath+Patch.swift in Sources */,
 				ECBCE0DE2161713A0078E03B /* Property+ChangesetContainerProtocol.swift in Sources */,
 				90C04DB81E8F0B97000077C8 /* UILabel.swift in Sources */,
@@ -1159,6 +1182,7 @@
 				EC930F42222B1137000D397C /* TreeChangeset+Array2D.swift in Sources */,
 				ECBCE0E62161766C0078E03B /* SectionedDataSourceChangesetConvertible.swift in Sources */,
 				90A4430B1E9055D100D611FE /* NSMenuItem.swift in Sources */,
+				9212D16822F19D07004636B6 /* POChangeset.swift in Sources */,
 				90C04DB01E8F0B97000077C8 /* UIBarButtonItem.swift in Sources */,
 				90A443091E9055D100D611FE /* NSControl.swift in Sources */,
 				90C04D7A1E8F0B89000077C8 /* Signal+Heartbeat.swift in Sources */,

@@ -24,6 +24,7 @@
 
 import Foundation
 
+
 /// A type that represents a collection change description, i.e. a modification of a collection.
 /// Changeset provides the collection itself as well as the change diff and patch.
 public protocol ChangesetProtocol {
@@ -92,11 +93,11 @@ open class Changeset<Collection, Operation, Diff: Instantiatable>: ChangesetProt
         self.precalculatedDiff = diff
     }
 
-    public init(collection: Collection, patch: [Operation], diff: Diff) {
-        self.collection = collection
-        self.precalculatedPatch = patch
-        self.precalculatedDiff = diff
-    }
+//    public init(collection: Collection, patch: [Operation], diff: Diff) {
+//        self.collection = collection
+//        self.precalculatedPatch = patch
+//        self.precalculatedDiff = diff
+//    }
 
     open func calculateDiff(from patch: [Operation]) -> Diff {
         return Diff()
