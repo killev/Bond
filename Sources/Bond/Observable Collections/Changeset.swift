@@ -32,6 +32,9 @@ public protocol ChangesetProtocol {
     associatedtype Operation
     associatedtype Collection
 
+
+    var shouldReload: Bool { get }
+
     /// A description of the change represented by this changeset as a diff.
     ///
     /// - note: If the changeset was instantiated with the patch only, diff will
@@ -57,11 +60,16 @@ public protocol ChangesetProtocol {
     /// Create a changeset for the given collection with the given precalculated diff.
     /// Patch will be calculated automatically if `patch` property is accessed.
     init(collection: Collection, diff: Diff)
+
+    // Create a changeset for the given collection which reloads data.
+    init(collection: Collection)
 }
 
 /// A type that represents a collection change description, i.e. a modification of a collection.
 /// Changeset provides the collection itself as well as the change diff and patch.
 open class Changeset<Collection, Operation, Diff: Instantiatable>: ChangesetProtocol {
+
+
 
     open var precalculatedDiff: Diff?
     open var precalculatedPatch: [Operation]?
@@ -92,10 +100,8 @@ open class Changeset<Collection, Operation, Diff: Instantiatable>: ChangesetProt
         self.precalculatedDiff = diff
     }
 
-    public init(collection: Collection, patch: [Operation], diff: Diff) {
+    public required init(collection: Collection) {
         self.collection = collection
-        self.precalculatedPatch = patch
-        self.precalculatedDiff = diff
     }
 
     open func calculateDiff(from patch: [Operation]) -> Diff {
@@ -105,4 +111,8 @@ open class Changeset<Collection, Operation, Diff: Instantiatable>: ChangesetProt
     open func calculatePatch(from diff: Diff) -> [Operation] {
         return []
     }
+    public var shouldReload: Bool {
+        return precalculatedDiff == nil && precalculatedPatch == nil
+    }
+
 }

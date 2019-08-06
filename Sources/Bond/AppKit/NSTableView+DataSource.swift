@@ -73,15 +73,19 @@ open class TableViewBinderDataSource<Changeset: FlatDataSourceChangeset>: NSObje
     }
 
     open func apply(changeset: Changeset) {
+
         guard let tableView = tableView else { return }
-        let patch = changeset.patch
-        if patch.isEmpty {
+
+        if changeset.shouldReload {
             collection = clone(changeset.collection)
-            tableView.reloadData()
+            tableView?.reloadData()
         } else {
-            tableView.beginUpdates()
-            patch.forEach(apply)
-            tableView.endUpdates()
+            let patch = changeset.patch
+            if !patch.isEmpty {
+                tableView.beginUpdates()
+                patch.forEach(apply)
+                tableView.endUpdates()
+            }
         }
     }
 

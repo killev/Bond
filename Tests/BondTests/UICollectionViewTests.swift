@@ -70,7 +70,10 @@ class UICollectionViewTests: XCTestCase {
     override func setUp() {
         array = MutableObservableArray([1, 2, 3])
         collectionView = TestCollectionView(frame: CGRect(x: 0, y: 0, width: 100, height: 1000), collectionViewLayout: UICollectionViewFlowLayout())
-        array.bind(to: collectionView, cellType: UICollectionViewCell.self) { _, _ in }
+        array.bind(to: collectionView, cellType: UICollectionViewCell.self) { cell, num in
+            print("Number \(num)")
+
+        }
     }
 
     func testInsertItems() {
@@ -102,6 +105,23 @@ class UICollectionViewTests: XCTestCase {
         let possibleResultA = [OrderedCollectionDiff(), OrderedCollectionDiff<IndexPath>(inserts: [IndexPath(row: 1, section: 0), IndexPath(row: 0, section: 0)])]
         let possibleResultB = [OrderedCollectionDiff(), OrderedCollectionDiff<IndexPath>(inserts: [IndexPath(row: 0, section: 0), IndexPath(row: 1, section: 0)])]
         XCTAssert(collectionView.observedEvents == possibleResultA || collectionView.observedEvents == possibleResultB)
+    }
+
+    func testBatchUpdatesAndSubscript() {
+       
+        array.batchUpdate { (array) in
+            array[2] = 4
+            array.remove(at: 2)
+            array.remove(at: 0)
+
+        }
+        //print( array.value.diff)
+        //print( array.value.diff)
+        //array[0] = 10
+        print( collectionView.observedEvents)
+        print ("real number: \(array.value.collection[0])")
+        //
+        //        XCTAssert(collectionView.observedEvents == possibleResultA || collectionView.observedEvents == possibleResultB)
     }
 }
 

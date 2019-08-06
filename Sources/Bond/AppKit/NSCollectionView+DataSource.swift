@@ -81,14 +81,18 @@ open class CollectionViewBinderDataSource<Changeset: SectionedDataSourceChangese
 
     open func applyChangeset(_ changeset: Changeset) {
         guard let collectionView = collectionView else { return }
-        let diff = changeset.diff.asOrderedCollectionDiff.map { $0.asSectionDataIndexPath }
-        if diff.isEmpty {
+
+
+        if changeset.shouldReload {
             collectionView.animator().reloadData()
         } else {
-            collectionView.animator()
-                .performBatchUpdates({
-                    self.applyChangesetDiff(diff)
-                }, completionHandler: nil)
+            let diff = changeset.diff.asOrderedCollectionDiff.map { $0.asSectionDataIndexPath }
+            if !diff.isEmpty {
+                collectionView.animator()
+                    .performBatchUpdates({
+                        self.applyChangesetDiff(diff)
+                    }, completionHandler: nil)
+            }
         }
     }
 

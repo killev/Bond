@@ -23,13 +23,13 @@ extension TreeChangeset: OutlineChangesetConvertible {
 extension TreeArray: OutlineChangesetConvertible {
 
     public var asTreeArrayChangeset: TreeChangeset<TreeArray<Value>> {
-        return TreeChangeset(collection: self, patch: [])
+        return TreeChangeset(collection: self)
     }
 }
 
 extension ObjectTreeArray: OutlineChangesetConvertible {
 
     public var asTreeArrayChangeset: TreeChangeset<ObjectTreeArray<Value>> {
-        return TreeChangeset(collection: self, patch: [])
+        return TreeChangeset(collection: self)
     }
 }

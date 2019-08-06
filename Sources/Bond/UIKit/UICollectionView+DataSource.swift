@@ -128,11 +128,16 @@ open class CollectionViewBinderDataSource<Changeset: SectionedDataSourceChangese
 
     public var createCell: ((Changeset.Collection, IndexPath, UICollectionView) -> UICollectionViewCell)?
 
-    public var changeset: Changeset? = nil {
-        didSet {
-            if let changeset = changeset, oldValue != nil {
+    private var _changeset: Changeset? = nil
+    public var changeset: Changeset? {
+        get {
+            return _changeset
+        }
+        set {
+            if let changeset = newValue, _changeset != nil {
                 applyChangeset(changeset)
             } else {
+                _changeset = newValue
                 collectionView?.reloadData()
                 ensureCollectionViewSyncsWithTheDataSource()
             }
@@ -174,13 +179,22 @@ open class CollectionViewBinderDataSource<Changeset: SectionedDataSourceChangese
 
     open func applyChangeset(_ changeset: Changeset) {
         guard let collectionView = collectionView else { return }
-        let diff = changeset.diff.asOrderedCollectionDiff.map { $0.asSectionDataIndexPath }
-        if diff.isEmpty {
+
+        if changeset.shouldReload {
+            _changeset = changeset
             collectionView.reloadData()
+        }
+
+        let diff = changeset.diff.asOrderedCollectionDiff.map { $0.asSectionDataIndexPath }
+
+        if diff.isEmpty {
+            _changeset = changeset
         } else if diff.count == 1 {
+            _changeset = changeset
             applyChangesetDiff(diff)
         } else {
             collectionView.performBatchUpdates({
+                _changeset = changeset
                 applyChangesetDiff(diff)
             }, completion: nil)
         }

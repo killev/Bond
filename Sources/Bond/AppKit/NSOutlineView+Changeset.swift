@@ -123,14 +123,17 @@ open class OutlineViewBinder<Changeset: TreeChangesetProtocol>: NSObject, NSOutl
 
     open func applyChangeset(_ changeset: Changeset) {
         guard let outlineView = outlineView else { return }
-        let patch = changeset.patch
-        if patch.isEmpty {
+
+        if changeset.shouldReload {
             rootNode = clone(changeset.collection)
             outlineView.reloadData()
         } else {
-            outlineView.beginUpdates()
-            patch.forEach { applyOperation($0.asOrderedCollectionOperation) }
-            outlineView.endUpdates()
+            let patch = changeset.patch
+            if !patch.isEmpty {
+                outlineView.beginUpdates()
+                patch.forEach { applyOperation($0.asOrderedCollectionOperation) }
+                outlineView.endUpdates()
+            }
         }
     }
 

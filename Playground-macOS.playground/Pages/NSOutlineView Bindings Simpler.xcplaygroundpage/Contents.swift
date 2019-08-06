@@ -38,7 +38,7 @@ extension NSView: TreeProtocol {
 
 // ...and use the scroll view (now a tree) as our data source
 
-let changeset = TreeChangeset(collection: scrollView, patch: [])
+let changeset = TreeChangeset(collection: scrollView)
 
 SafeSignal
     .just(changeset)

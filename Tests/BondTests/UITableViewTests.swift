@@ -103,6 +103,31 @@ class UITableViewTests: XCTestCase {
         let possibleResultB = [OrderedCollectionDiff(), OrderedCollectionDiff<IndexPath>(inserts: [IndexPath(row: 0, section: 0), IndexPath(row: 1, section: 0)])]
         XCTAssert(tableView.observedEvents == possibleResultA || tableView.observedEvents == possibleResultB)
     }
+
+    func testBatchUpdates12() {
+        array.batchUpdate { (array) in
+            array.insert(0, at: 0)
+            array.insert(1, at: 0)
+        }
+
+        let possibleResultA = [OrderedCollectionDiff(), OrderedCollectionDiff<IndexPath>(inserts: [IndexPath(row: 1, section: 0), IndexPath(row: 0, section: 0)])]
+        let possibleResultB = [OrderedCollectionDiff(), OrderedCollectionDiff<IndexPath>(inserts: [IndexPath(row: 0, section: 0), IndexPath(row: 1, section: 0)])]
+        XCTAssert(tableView.observedEvents == possibleResultA || tableView.observedEvents == possibleResultB)
+    }
+
+    func testBatchUpdatesAndSubscript() {
+        array.batchUpdate { (array) in
+            //array.remove(at: 1)
+            array[2] = 4
+            array.remove(at: 1)
+            array.remove(at: 0)
+        }
+
+        print( array.value.diff)
+        print( array.value.diff)
+        //
+        //        XCTAssert(collectionView.observedEvents == possibleResultA || collectionView.observedEvents == possibleResultB)
+    }
 }
 
 #endif

@@ -69,7 +69,7 @@ extension Array: QueryableFlatDataSourceProtocol {
 
 extension Array: FlatDataSourceChangesetConvertible {
     public var asFlatDataSourceChangeset: OrderedCollectionChangeset<[Element]> {
-        return OrderedCollectionChangeset(collection: self, patch: [])
+        return OrderedCollectionChangeset(collection: self)
     }
 }
 
