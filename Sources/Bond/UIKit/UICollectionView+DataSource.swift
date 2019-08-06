@@ -183,6 +183,7 @@ open class CollectionViewBinderDataSource<Changeset: SectionedDataSourceChangese
         if changeset.shouldReload {
             _changeset = changeset
             collectionView.reloadData()
+            return
         }
 
         let diff = changeset.diff.asOrderedCollectionDiff.map { $0.asSectionDataIndexPath }
