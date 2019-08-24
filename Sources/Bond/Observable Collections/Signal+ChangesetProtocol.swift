@@ -161,6 +161,12 @@ extension SignalProtocol where Element: UnorderedCollectionChangesetProtocol, El
                 return indexMap.merging([new.element: new.offset], uniquingKeysWith: { $1 })
             })
 
+            if event.shouldReload {
+                previousIndexMap = [:]
+                return OrderedCollectionChangeset(
+                    collection: sortedElements)
+            }
+
             let diff = event.diff.transformingIndices(fromIndexMap: previousIndexMap, toIndexMap: indexMap)
             previousIndexMap = indexMap
 
@@ -185,8 +191,14 @@ extension SignalProtocol where Element: OrderedCollectionChangesetProtocol, Elem
     /// - complexity: Each event transforms collection O(n). Use `lazyMapCollection` if you need on-demand mapping.
     public func mapCollection<U>(_ transform: @escaping (Element.Collection.Element) -> U) -> Signal<OrderedCollectionChangeset<[U]>, Error> {
         return map { (event: Element) -> OrderedCollectionChangeset<[U]> in
+
+            let collection = event.collection.map(transform)
+            if event.shouldReload {
+                return OrderedCollectionChangeset(collection: collection)
+            }
+
             return OrderedCollectionChangeset(
-                collection: event.collection.map(transform),
+                collection: collection,
                 diff: event.diff
             )
         }
@@ -195,8 +207,14 @@ extension SignalProtocol where Element: OrderedCollectionChangesetProtocol, Elem
     /// - complexity: O(1).
     public func lazyMapCollection<U>(_ transform: @escaping (Element.Collection.Element) -> U) -> Signal<OrderedCollectionChangeset<LazyMapCollection<Element.Collection, U>>, Error> {
         return map { (event: Element) -> OrderedCollectionChangeset<LazyMapCollection<Element.Collection, U>> in
+            let lazyCollection = event.collection.lazy.map(transform)
+
+            if event.shouldReload {
+                return OrderedCollectionChangeset(collection: lazyCollection)
+            }
+
             return OrderedCollectionChangeset(
-                collection: event.collection.lazy.map(transform),
+                collection: lazyCollection,
                 diff: event.diff
             )
         }
@@ -220,6 +238,11 @@ extension SignalProtocol where Element: OrderedCollectionChangesetProtocol, Elem
                     indexMap[index] = iterator
                     iterator += 1
                 }
+            }
+
+            if event.shouldReload {
+                previousIndexMap = [:]
+                return OrderedCollectionChangeset(collection: filtered)
             }
 
             let diff = event.diff.transformingIndices(fromIndexMap: previousIndexMap, toIndexMap: indexMap)
