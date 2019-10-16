@@ -77,4 +77,27 @@ class CollectionChangesetDiffAndPatchTest: XCTestCase {
 
         XCTAssertEqual(collection, testCollection, "Operations: \(operations), Diff: \(diff), Patch: \(patch)")
     }
+    func testReplace(){
+        let array = MutableObservableArray<Int>([1,2,3,4])
+   
+        array.map{ ($0.collection, $0.shouldReload) }
+            .expectNext([
+                ([1, 2, 3, 4], true),
+                ([1, 2, 3, 5], true)
+            ])
+        array.replace(with: [1,2,3,5])
+        
+    }
+    
+    func testReplacePerformDiff(){
+         let array = MutableObservableArray<Int>([1,2,3,4])
+    
+        array.map{ ($0.collection, $0.shouldReload) }
+        .expectNext([
+            ([1, 2, 3, 4], true),
+            ([1, 2, 3, 5], false)
+        ])
+        array.replace(with: [1,2,3,5], performDiff: true)
+         
+     }
 }

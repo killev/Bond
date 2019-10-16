@@ -61,10 +61,13 @@ extension MutableChangesetContainerProtocol {
     }
 
     /// Update the collection and provide a description of changes as diff.
-    public func descriptiveUpdate(_ update: (inout Collection) -> Diff) {
+    public func descriptiveUpdate(_ update: (inout Collection) -> Diff?) {
         var collection = changeset.collection
-        let diff = update(&collection)
-        changeset = Changeset(collection: collection, diff: diff)
+        if let diff = update(&collection) {
+            changeset = Changeset(collection: collection, diff: diff)
+        } else {
+            changeset = Changeset(collection: collection)
+        }
     }
 
     /// Update the collection and provide a description of changes as patch.
@@ -77,17 +80,17 @@ extension MutableChangesetContainerProtocol {
 
     /// Replace the underlying collection with the given collection.
     public func replace(with newCollection: Collection) {
-        descriptiveUpdate { (collection) -> [Changeset.Operation] in
+        descriptiveUpdate { (collection) -> Diff? in
             collection = newCollection
-            return []
+            return nil
         }
     }
 
     /// Replace the underlying collection with the given collection. Setting `performDiff: true` will make the framework
     /// calculate the diff between the existing and new collection and emit an event with the calculated diff.
-    public func replace(with newCollection: Collection, performDiff: Bool, generateDiff: (Collection, Collection) -> Diff) {
+    public func replace(with newCollection: Collection, performDiff: Bool, generateDiff: (Collection, Collection) -> Diff?) {
         if performDiff {
-            descriptiveUpdate { (collection) -> Diff in
+            descriptiveUpdate { (collection) -> Diff? in
                 let diff = generateDiff(collection, newCollection)
                 collection = newCollection
                 return diff

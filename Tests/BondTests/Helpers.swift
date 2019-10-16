@@ -33,6 +33,8 @@ extension Event {
                 return left == right
             } else if let left = left as? (Int?, Int), let right = right as? (Int?, Int) {
                 return left.0 == right.0 && left.1 == right.1
+            } else if let left = left as? (Array<Int>, Bool), let right = right as? (Array<Int>, Bool) {
+                return left.0 == right.0 && left.1 == right.1
             } else if let left = left as? String, let right = right as? String {
                 return left == right
             } else if let left = left as? Date, let right = right as? Date {
